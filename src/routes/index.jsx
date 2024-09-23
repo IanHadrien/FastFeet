@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { AuthRoutes } from "./auth.routes";
 import Index from "../screens/app";
 import { useAuth } from "../contexts/auth";
+import { AppRoutes } from "./app.routes";
 
 export function Routes() {
   // const signed = false;
@@ -17,7 +18,7 @@ export function Routes() {
       <StatusBar />
       { signed 
         ?
-          <Index />
+          <AppRoutes />
         :
           <AuthRoutes />
       }
