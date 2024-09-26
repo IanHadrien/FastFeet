@@ -15,13 +15,13 @@ export function Routes() {
   // if (loading) return 
   return (
     <NavigationContainer>
-      <StatusBar />
       { signed 
         ?
           <AppRoutes />
         :
           <AuthRoutes />
       }
+      <StatusBar style="auto" />
     </NavigationContainer>
   )
 }

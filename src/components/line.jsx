@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 export function DividerWithText({ text }) {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} className="mb-4">
       <View style={styles.line} />
       <Text style={styles.text}>{text}</Text>
       <View style={styles.line} />

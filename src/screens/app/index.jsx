@@ -1,12 +1,15 @@
 import React from 'react';
-import { ScrollView, Text } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { DividerWithText } from '../../components/line';
+import FlatListComponent from '../../components/lists/flat-list';
 
 export default function Index() {
   return (
-    <ScrollView className="bg-primary-white px-6">
+    <SafeAreaView className="bg-primary-white px-6">
       <DividerWithText text='8 entregas' />
-      <Text>Index</Text>
-    </ScrollView>
+
+      <FlatListComponent />
+
+    </SafeAreaView>
   );
 }

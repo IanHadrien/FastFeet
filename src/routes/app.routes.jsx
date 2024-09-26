@@ -3,6 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Index from "../screens/app";
 import IndexCompleted from "../screens/app/index-completed";
 import { CustomHeader } from "./custom-header";
+import Details from "../screens/app/details";
+import Confirm from "../screens/app/confirm";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -77,8 +79,8 @@ function IndexStackNavigator() {
       })}
     >
       <Stack.Screen name="Pendentes" component={Index} />
-      {/* <Stack.Screen name="Detalhes do Chamado" component={TicketDetails} /> */}
-
+      <Stack.Screen name="Detalhes" component={Details} />
+      <Stack.Screen name="Confirmar" component={Confirm} />
     </Stack.Navigator>
   )
 }
