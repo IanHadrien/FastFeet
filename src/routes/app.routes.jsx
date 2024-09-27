@@ -5,6 +5,13 @@ import IndexCompleted from "../screens/app/index-completed";
 import { CustomHeader } from "./custom-header";
 import Details from "../screens/app/details";
 import Confirm from "../screens/app/confirm";
+import { CustomHeaderCreate } from "./custom-header-create";
+import IndexCreate from "../screens/app/index-create";
+import Orders from "../screens/app/order";
+import Recipients from "../screens/app/recipient";
+import Users from "../screens/app/users/users";
+import CreateUser from "../screens/app/users/create";
+import EditUser from "../screens/app/users/edit";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -39,11 +46,11 @@ export function AppRoutes() {
             paddingBottom: 20
           },
           tabBarItemStyle: ({ focused }) => ({
-            borderTopWidth: focused ? 4 : 0, // Adiciona borda superior quando focado
-            borderTopColor: focused ? "#4C33CC" : "transparent", // Cor da borda superior
+            borderTopWidth: focused ? 4 : 0,
+            borderTopColor: focused ? "#4C33CC" : "transparent",
           }),
           tabBarLabel: "Pendentes",
-          tabBarIcon: () => null, // Removendo o ícone
+          tabBarIcon: () => null,
         }}
       />
       <Tab.Screen 
@@ -55,11 +62,29 @@ export function AppRoutes() {
             paddingBottom: 20
           },
           tabBarLabel: "Feitas",
-          tabBarIcon: () => null, // Removendo o ícone
+          tabBarIcon: () => null,
           tabBarItemStyle: ({ focused }) => ({
             paddingBottom: 10,
-            borderTopWidth: focused ? 4 : 0,  // Borda no topo quando ativo
-            borderTopColor: focused ? "#4C33CC" : "transparent", // Cor da borda da aba ativa
+            borderTopWidth: focused ? 4 : 0, 
+            borderTopColor: focused ? "#4C33CC" : "transparent",
+          }),
+        }}
+
+      />
+      <Tab.Screen 
+        name="index-create"
+        component={IndexCreateStackNavigator}
+        options={{
+          tabBarLabelStyle: { 
+            fontSize: 15 ,
+            paddingBottom: 20
+          },
+          tabBarLabel: "Cadastros",
+          tabBarIcon: () => null,
+          tabBarItemStyle: ({ focused }) => ({
+            paddingBottom: 10,
+            borderTopWidth: focused ? 4 : 0,
+            borderTopColor: focused ? "#4C33CC" : "transparent",
           }),
         }}
 
@@ -93,6 +118,23 @@ function IndexCompletedStackNavigator() {
       })}
     >
       <Stack.Screen name="Feitas" component={IndexCompleted} />
+    </Stack.Navigator>
+  )
+}
+
+function IndexCreateStackNavigator() {
+  return (
+    <Stack.Navigator
+      screenOptions={({ route }) => ({
+        header: () => <CustomHeaderCreate title={route.name} />,
+      })}
+    >
+      <Stack.Screen name="Create" component={IndexCreate} />
+      <Stack.Screen name="Users" component={Users} />
+      <Stack.Screen name="CreateUser" component={CreateUser} />
+      <Stack.Screen name="EditUser" component={EditUser} />
+      <Stack.Screen name="Orders" component={Orders} />
+      <Stack.Screen name="Recipients" component={Recipients} />
     </Stack.Navigator>
   )
 }

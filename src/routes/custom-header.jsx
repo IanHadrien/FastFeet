@@ -3,9 +3,10 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconEvilIcons from 'react-native-vector-icons/EvilIcons';
 import { InputIconSearch } from '../components/inputs/inputIconSearch';
+import { useAuth } from "../contexts/auth";
 
 export function CustomHeader({ title }) {
-  console.log("Titulo", title);
+  const { signOut } = useAuth();
   const [text, setText] = useState('')
 
   return (
@@ -24,7 +25,7 @@ export function CustomHeader({ title }) {
                 <Text className="text-primary-purple2 text-base">Ian Hadrien</Text>
               </View>
               <View>
-                <TouchableOpacity onPress={() => console.log('Log-out')}>
+                <TouchableOpacity onPress={() => signOut()}>
                   <IconFeather name='log-out' size={24} color='#FFC042' />
                 </TouchableOpacity>
               </View>

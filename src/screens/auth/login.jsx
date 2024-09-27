@@ -4,22 +4,32 @@ import { InputIcon } from '../../components/inputs/inputIcon';
 import { InputIconText } from '../../components/inputs/inputIconText';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../contexts/auth';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import UsersAPI from '../../api/users-api';
 
 export default function Login() {
   const { signIn } = useAuth()
   const navigation = useNavigation()
-  const [text, setText] = useState('')
+  const [cpf, setCpf] = useState('')
+  const [password, setPassword] = useState('')
 
   const handleSubmit = async () => {
-    console.log('Login')
-    const dataTest = {
-      user: {
-        name: 'John',
-        senha: 'John',
-      },
-      token: '17263172318'
+
+    const regTemp = { cpf, password }
+    // setIsLoading(true)
+    try {
+      // clearErrors();
+      const dataRes = await UsersAPI.Login(regTemp);
+      await signIn(dataRes?.data);
+      // setIsLoading(false);
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text2: 'Erro ao realizar login.',
+      });
+
+      setIsLoading(false)
     }
-    await signIn(dataTest)
   }
 
   return (
@@ -50,15 +60,15 @@ export default function Login() {
       <View className=" pt-14">
         {/* <Text */}
         <InputIconText 
-          onChangeText={setText}
-          value={text}
+          onChangeText={setCpf}
+          value={cpf}
           placeholder='CPF'
         />
         <InputIcon 
-           onChangeText={setText}
-           value={text}
+           onChangeText={setPassword}
+           value={password}
            placeholder='Senha'
-           className={`border w-full p-2 rounded-lg ${text && "border-red-500"}`}
+           className={`border w-full p-2 rounded-lg ${password && "border-red-500"}`}
         />
 
         <View className="flex-row items-center justify-between mt-1">

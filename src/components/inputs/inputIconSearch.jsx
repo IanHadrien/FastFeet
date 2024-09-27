@@ -2,7 +2,7 @@ import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import React, { useState } from 'react';
 import IconFontisto from 'react-native-vector-icons/Fontisto';
 
-export function InputIconSearch({ id, name, placeholder, onChangeText, value, error, disable}) {
+export function InputIconSearch({ id, name, placeholder, onChangeText, value, error, disable, bgColor="bg-primary-white"}) {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -11,7 +11,7 @@ export function InputIconSearch({ id, name, placeholder, onChangeText, value, er
 
   return (
     <>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }} className={`relative border border-gray-200 rounded bg-primary-white ${disable && "border-gray-300"} ${error && "border-red-500"}`}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }} className={`relative border border-gray-200 rounded ${bgColor} ${disable && "border-gray-300"} ${error && "border-red-500"}`}>
         <TextInput
           id={id}
           name={name}
