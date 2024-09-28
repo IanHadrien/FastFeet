@@ -17,7 +17,7 @@ const Item = ({item}) => {
       <View className="px-3 py-4">
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center space-x-3">
-            <Text className="text-primary-gray2 font-bold text-2xl">{item?.status}</Text>
+            <Text className="text-primary-gray2 font-bold text-2xl">{item?.name}</Text>
           </View>
         </View>
       </View>

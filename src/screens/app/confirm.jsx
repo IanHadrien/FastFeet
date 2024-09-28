@@ -1,10 +1,32 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import ImagePickerComponent from '../../components/camera/expo-image';
+import OrdersAPI from '../../api/order-api';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
-export default function Confirm() {
+export default function Confirm({ route }) {
+  const { idOrder } = route.params
   const navigation = useNavigation()
+
+  const handleConfirm = async () => {
+    console.log('Confirm', idOrder)
+    try {
+      await OrdersAPI.MarkDeliverOrder(idOrder);
+
+      Toast.show({
+        type: "success",
+        text2: "Situação atualizada com sucesso.",
+      });
+      
+      navigation.navigate('Pendentes')
+    } catch (error) {
+      console.log(error)
+      Toast.show({
+        type: "error",
+        text2: "Erro ao atualizar situação.",
+      });
+    }
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -33,7 +55,7 @@ export default function Confirm() {
       {/* Botão fixado ao final */}
       <View className="px-6" style={{ padding: 16, position: 'absolute', bottom: 0, left: 0, right: 0 }}>
         <TouchableOpacity
-          onPress={() => console.log('Retirar')}
+          onPress={handleConfirm}
           style={{
             backgroundColor: '#FFC042',
             padding: 16,

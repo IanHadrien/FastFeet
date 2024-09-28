@@ -1,9 +1,63 @@
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import OrdersAPI from '../../api/order-api';
+import moment from 'moment';
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
 
-export default function Details() {
+export default function Details({ route }) {
+  const { status } = route.params
+  const { idOrder } = route.params
+
   const navigation = useNavigation()
+  const isFocused = useIsFocused()
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    loadRegister()
+  }, [isFocused])
+
+  const loadRegister = async () => {
+    // setLoading(true);
+
+    try {
+      const res = await OrdersAPI.GetOne(idOrder)
+      console.log("teste: ", res?.data?.order)
+
+      setData(res?.data?.order);
+    } catch (e) {
+      console.log("Erro:", e);
+      // Toast.show({
+      //   type: "error",
+      //   text2: "Erro na busca!",
+      // })
+    } finally {
+      // setLoading(false);
+    }
+  }
+
+  const handleConfirm = async () => {
+    if (status === "Aguardando") {
+      try {
+        await OrdersAPI.MarkPickupOrder(idOrder);
+  
+        Toast.show({
+          type: "success",
+          text2: "Situação atualizada com sucesso.",
+        });
+        
+        navigation.navigate('Pendentes')
+      } catch (error) {
+        console.log(error)
+        Toast.show({
+          type: "error",
+          text2: "Erro ao atualizar situação.",
+        });
+      }
+    } else  {
+      navigation.navigate('Confirmar', { idOrder })
+    }
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -35,9 +89,9 @@ export default function Details() {
             </View>
             <View className="mt-5">
               <Text className="text-primary-gray2 font-bold text-xs">DESTINATÁRIO</Text>
-              <Text className="text-primary-gray3 text-base mt-1 mb-4">Ian Hadrien</Text>
+              <Text className="text-primary-gray3 text-base mt-1 mb-4">{data?.recipient?.name}</Text>
               <Text className="text-primary-gray2 font-bold text-xs">ENDEREÇO</Text>
-              <Text className="text-primary-gray3 text-base mt-1 mb-4 mr-16">Rua Guilherme Gemballa, 260 Jardim América, SC 89 168-000</Text>
+              <Text className="text-primary-gray3 text-base mt-1 mb-4 mr-16">{data?.recipient?.address}</Text>
             </View>
           </View>
 
@@ -52,21 +106,29 @@ export default function Details() {
             <View className="mt-5 flex-row items-center justify-between">
               <View>
                 <Text className="text-primary-gray2 font-bold text-xs">STATUS</Text>
-                <Text className="text-primary-gray3 text-base mt-1 mb-4">Aguardando</Text>
+                <Text className="text-primary-gray3 text-base mt-1 mb-4">{data?.status}</Text>
               </View>
               <View className="mr-16">
                 <Text className="text-primary-gray2 font-bold text-xs">POSTADO EM</Text>
-                <Text className="text-primary-gray3 text-base mt-1 mb-4">01/07/2020</Text>
+                <Text className="text-primary-gray3 text-base mt-1 mb-4">{moment(data?.createdAt).format('DD/MM/YYYY')}</Text>
               </View>
             </View>
             <View className="mt-2 flex-row items-center justify-between">
               <View>
                 <Text className="text-primary-gray2 font-bold text-xs">DATA DE RETIRADA</Text>
-                <Text className="text-primary-gray3 text-base mt-1 mb-4">--/--/----</Text>
+                <Text className="text-primary-gray3 text-base mt-1 mb-4">
+                  {
+                    data?.returnDate ? moment(data?.returnDate).format('DD/MM/YYYY') : "--/--/----"
+                  }
+                </Text>
               </View>
               <View className="mr-12">
                 <Text className="text-primary-gray2 font-bold text-xs">DATA DE ENTREGA</Text>
-                <Text className="text-primary-gray3 text-base mt-1 mb-4">--/--/----</Text>
+                <Text className="text-primary-gray3 text-base mt-1 mb-4">
+                  {
+                    data?.deliveryDate ? moment(data?.deliveryDate).format('DD/MM/YYYY') : "--/--/----"
+                  }
+                </Text>
               </View>
             </View>
           </View>
@@ -85,7 +147,7 @@ export default function Details() {
       {/* Botão fixado ao final */}
       <View className="px-6" style={{ padding: 16, position: 'absolute', bottom: 0, left: 0, right: 0 }}>
         <TouchableOpacity
-          onPress={() => (navigation.navigate('Confirmar'))}
+          onPress={handleConfirm}
           style={{
             backgroundColor: '#FFC042',
             padding: 16,
@@ -93,7 +155,9 @@ export default function Details() {
             alignItems: 'center',
           }}
         >
-          <Text className="font-medium text-base text-primary-gray2">Retirar pacote</Text>
+          <Text className="font-medium text-base text-primary-gray2">
+            {status === "Aguardando" ? "Retirar pacote" : "Confirmar entrega"}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

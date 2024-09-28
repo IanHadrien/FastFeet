@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export function Timeline() {
+export function Timeline({ status }) {
   return (
     <View style={styles.container}>
       {/* Aguardando */}
@@ -11,20 +11,40 @@ export function Timeline() {
       </View>
       
       {/* Linha verde */}
-      <View style={[styles.line, styles.activeLine]} />
+      { status !== "Retirada" && status !== "Entregue" &&
+        <View style={[styles.line]} />
+      }
+      {(status == "Retirada" || status == "Entregue" ) &&
+        <View style={[styles.line, styles.activeLine]} />
+      }
 
       {/* Retirado */}
       <View style={styles.stepContainer}>
-        <View style={[styles.circle, styles.activeCircle]} />
+        { status !== "Retirada" && status !== "Entregue" &&
+          <View style={[styles.circle]} />
+        }
+        {(status == "Retirada" || status == "Entregue") &&
+          <View style={[styles.circle, styles.activeCircle]} />
+        }
         {/* <Text style={styles.activeText}>RETIRADO</Text> */}
       </View>
       
       {/* Linha cinza */}
-      <View style={styles.line} />
+      {status !== "Entregue" &&
+        <View style={styles.line} />
+      }
+      {(status == "Entregue") &&
+        <View style={[styles.line, styles.activeLine]} />
+      }
 
       {/* Entregue */}
       <View style={styles.stepContainer}>
-        <View style={styles.circle} />
+        {status !== "Entregue" &&
+          <View style={[styles.circle]} />
+        }
+        {status == "Entregue" &&
+          <View style={[styles.circle, styles.activeCircle]} />
+        }
         {/* <Text style={styles.inactiveText}>ENTREGUE</Text> */}
       </View>
     </View>

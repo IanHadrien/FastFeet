@@ -7,6 +7,10 @@ const controller = "orders"
 const OrdersAPI = {
   Get: async () => api.get(`${controller}`),
 
+  GetOrderPedding: async (idUser) => api.get(`${controller}/user/${idUser}/pending`),
+
+  GetOrderCompleted: async (idUser) => api.get(`${controller}/user/${idUser}/completed`),
+
   GetOne: async (id) => api.get(`${controller}/${id}`),
 
   Create: async (recipient) => {
@@ -21,6 +25,22 @@ const OrdersAPI = {
   Update: async (id, recipient) => {
     try {
       await api.put(`${controller}/${id}`, recipient)
+    } catch (error) {
+      throw error
+    }
+  },
+
+  MarkDeliverOrder: async (id) => {
+    try {
+      await api.put(`${controller}/${id}/deliver`)
+    } catch (error) {
+      throw error
+    }
+  },
+
+  MarkPickupOrder: async (id) => {
+    try {
+      await api.put(`${controller}/${id}/pickup`)
     } catch (error) {
       throw error
     }

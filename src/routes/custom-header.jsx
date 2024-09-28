@@ -22,7 +22,7 @@ export function CustomHeader({ title }) {
             <View className="flex-row items-center justify-between pb-6 px-6">
               <View>
                 <Text className="text-primary-purple2 text-base">Bem vindo,</Text>
-                <Text className="text-primary-purple2 text-base">Ian Hadrien</Text>
+                <Text className="text-primary-purple2 text-base">Test User</Text>
               </View>
               <View>
                 <TouchableOpacity onPress={() => signOut()}>
@@ -46,7 +46,7 @@ export function CustomHeader({ title }) {
                 <InputIconSearch
                   onChangeText={setText}
                   value={text}
-                  placeholder='Filtrar por bairro'
+                  placeholder='Filtrar por entregas'
                   className={`border w-full p-2 rounded-lg ${text && "border-red-500"}`}
                 />
               </View>
