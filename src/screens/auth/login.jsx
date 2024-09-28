@@ -33,7 +33,7 @@ export default function Login() {
   }
 
   return (
-    <ScrollView className="bg-primary-purple pt-2 px-6">
+    <ScrollView className="bg-primary-purple pt-2 px-6 pb-4">
       <View>
         <View className="flex-row items-center justify-between py-20">
           <Image
@@ -82,7 +82,7 @@ export default function Login() {
 
         <TouchableOpacity
           onPress={handleSubmit}
-          className="bg-primary-yellow py-4 rounded mt-4"
+          className="bg-primary-yellow py-4 rounded mt-4 mb-6"
         >
           <Text className="text-primary-purple font-medium text-base text-center">
             Entrar
