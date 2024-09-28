@@ -7,11 +7,13 @@ import Details from "../screens/app/details";
 import Confirm from "../screens/app/confirm";
 import { CustomHeaderCreate } from "./custom-header-create";
 import IndexCreate from "../screens/app/index-create";
-import Orders from "../screens/app/order";
-import Recipients from "../screens/app/recipient";
 import Users from "../screens/app/users/users";
 import CreateUser from "../screens/app/users/create";
 import EditUser from "../screens/app/users/edit";
+import Recipients from "../screens/app/recipient/recipient";
+import CreateRecipient from "../screens/app/recipient/create";
+import EditRecipient from "../screens/app/recipient/edit";
+import Orders from "../screens/app/order/orders";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -135,6 +137,8 @@ function IndexCreateStackNavigator() {
       <Stack.Screen name="EditUser" component={EditUser} />
       <Stack.Screen name="Orders" component={Orders} />
       <Stack.Screen name="Recipients" component={Recipients} />
+      <Stack.Screen name="CreateRecipient" component={CreateRecipient} />
+      <Stack.Screen name="EditRecipient" component={EditRecipient} />
     </Stack.Navigator>
   )
 }
